@@ -91,17 +91,13 @@ class SiteController extends Controller
      */
     private function makeTree($items, $parent = 0) {
         // будем строить новый массив-дерево
-//        $this->pr($items, $parent, 111111111);
         $nitems = array();
         foreach($items as $ki => $item) {
-//        for($items = 0; $items < 10; $items++) {
             /* проверяем, относится ли родитель элемента к самому
             верхнему уровню и не ссылается ли на самого себя */
             if($item['parent'] == $parent) {
                 // удаляем этот элемент из общего массива
                 unset($this->items[$ki]);
-//                $this->pr($this->items, $item['val']);
-//                die();
                 $item['children'] = $this->makeTree($this->items, $item['val']);
                 $nitems[$ki] = $item;
 
@@ -146,7 +142,8 @@ class SiteController extends Controller
             try {
                 $apiInstance = new DefaultApi();
                 $result = $apiInstance->gifsRandomGet(Yii::$app->params['giphy_api_key'])->getData();
-                echo json_encode(array('status' => 'ok', 'content' => $result["image_url"]));die();
+                echo json_encode(array('status' => 'ok', 'content' => $result["image_url"]));
+                die();
             } catch (Exception $e) {
                 echo 'Ошибка при выводе картинки Giphy: ', $e->getMessage(), PHP_EOL;
             }
